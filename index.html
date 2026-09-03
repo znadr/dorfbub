@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" 
+    content="width=device-width, 
+    initial-scale=1.0">
+  <title>dorfbub.com</title>
+  <style>
+    :root {
+      /* Hintergrund weiter harmonisch abgedunkelt */
+      --bg: #d4cfc1; 
+      --bg-light: #ffffff;
+      --text: #2e3d30;
+      --accent: #d4a373;
+      --accent-light: #e9c49a;
+      --box-bg: #c5cdb2; /* Box-Hintergrund für optimalen Kontrast angepasst */
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, 
+        BlinkMacSystemFont, 
+        "Segoe UI", Roboto, 
+        Helvetica, Arial, 
+        sans-serif;
+      /* Verstärkter Lichtstrahl auf dunklerem Grund */
+      background: radial-gradient(
+        circle at 100% 0%, 
+        var(--bg-light) 0%, 
+        rgba(255,254,251,0.95) 15%,
+        var(--bg) 65%
+      );
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: 
+        space-between;
+      padding: 40px 20px;
+    }
+    header {
+      margin-top: 50px;
+    }
+    /* Logo mit starkem, edlem 3D-Effekt */
+    .logo {
+      font-size: 3.6rem;
+      font-weight: 800;
+      text-transform: lowercase;
+      letter-spacing: 0.15em;
+      color: var(--text);
+      /* Mehrschichtiger Textschatten für räumliche Tiefe */
+      text-shadow: 
+        -1px 1px 0px #b2bba1,
+        -2px 2px 0px #9da68d,
+        -3px 3px 0px rgba(46, 61, 48, 0.2),
+        -5px 5px 10px rgba(46, 61, 48, 0.15);
+    }
+    main {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+      gap: 60px;
+      margin: 60px 0;
+    }
+    .vector-art {
+      width: 100%;
+      max-width: 460px;
+      height: auto;
+      display: block;
+    }
+    .contact-container {
+      width: 100%;
+      display: flex;
+    }
+    .contact-box {
+      background-color: 
+        var(--box-bg);
+      border-top: 2px solid rgba(255, 255, 255, 0.4);
+      border-right: 2px solid rgba(46, 61, 48, 0.15);
+      border-bottom: 3px solid rgba(46, 61, 48, 0.25);
+      border-left: 6px solid var(--accent);
+      box-shadow: 
+        0 4px 6px rgba(46, 61, 48, 0.04),
+        0 16px 24px rgba(46, 61, 48, 0.12), 
+        0 24px 48px rgba(46, 61, 48, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+      padding: 30px;
+      width: 100%;
+      max-width: 620px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: left;
+      transform: translateY(-2px);
+    }
+    .contact-box h2, 
+    .contact-box p, 
+    .email {
+      font-family: inherit;
+      color: var(--text);
+      line-height: 1.5;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+    .contact-box h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .contact-box p {
+      font-size: 1rem;
+      font-weight: 400;
+      opacity: 0.85;
+    }
+    .email {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      font-weight: 400;
+      opacity: 0.7;
+    }
+    footer {
+      display: flex;
+      justify-content: 
+        space-between;
+      align-items: flex-end;
+      font-size: 0.85rem;
+      border-top: 1px solid 
+        rgba(46, 61, 48, 0.15);
+      padding-top: 20px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .footer-left {
+      opacity: 0.7;
+    }
+    .ds-btn {
+      background: none;
+      border: 1px solid rgba(46, 61, 48, 0.25);
+      color: var(--text);
+      padding: 3px 6px;
+      cursor: pointer;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.6;
+      transition: all 0.2s;
+    }
+    .ds-btn:hover {
+      background-color: 
+        var(--text);
+      color: var(--bg-light);
+      opacity: 1;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      z-index: 1000;
+    }
+    .modal-content {
+      background: var(--bg-light);
+      padding: 20px;
+      max-width: 340px;
+      width: 100%;
+      max-height: 70vh;
+      overflow-y: auto;
+      border-left: 4px solid 
+        var(--accent);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+    .modal h3 {
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .modal p, .modal ul {
+      font-size: 0.75rem;
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+    .modal ul {
+      padding-left: 15px;
+    }
+    .close-btn {
+      background: var(--text);
+      color: var(--bg-light);
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    @media (min-width: 768px) {
+      body {
+        padding: 60px 80px;
+      }
+      main {
+        flex-direction: 
+          row-reverse;
+        justify-content: 
+          space-between;
+        align-items: flex-end;
+      }
+      .contact-container {
+        width: auto;
+        margin-bottom: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      dorfbub.com
+    </div>
+  </header>
+
+  <main>
+    <svg class="vector-art" 
+      viewBox="0 0 140 92" 
+      xmlns="http://w3.org">
+      <path d="M 15,75 A 45,45 0 0,1 105,75" fill="none" stroke="var(--box-bg)" stroke-width="1.5" stroke-dasharray="2 2" />
+      <polygon points="10,75 40,25 75,75" fill="none" stroke="var(--accent-light)" stroke-width="1" />
+      <polygon points="55,75 90,30 125,75" fill="none" stroke="var(--accent-light)" stroke-width="1" />
+      <line x1="40" y1="25" x2="50" y2="75" stroke="var(--accent-light)" stroke-width="0.5" />
+      <line x1="90" y1="30" x2="80" y2="75" stroke="var(--accent-light)" stroke-width="0.5" />
+      <polygon points="-5,75 25,38 60,75" fill="none" stroke="var(--accent)" stroke-width="1.5" />
+      <polygon points="35,75 75,45 115,75" fill="none" stroke="var(--accent)" stroke-width="1.5" />
+      <line x1="25" y1="38" x2="35" y2="75" stroke="var(--accent)" stroke-width="0.7" />
+      <line x1="75" y1="45" x2="65" y2="75" stroke="var(--accent)" stroke-width="0.7" />
+      <line x1="0" y1="75" x2="135" y2="75" stroke="var(--text)" stroke-width="1.5" stroke-linecap="round" />
+      <g fill="var(--text)">
+        <path d="M 64.5,75 L 65.5,63 C 65.5,61 66.5,60 68,60 L 71,60 C 72.5,60 73.5,61 73.5,63 L 74.5,75 L 71.5,75 L 70.5,65 L 68.5,65 L 67.5,75 Z" />
+        <path d="M 61,60 C 59.5,60 59,56 60,53 C 61,50.5 63,50 69,50 C 75,50 77,50.5 78,53 C 79,56 78.5,60 77,60 L 74,60 L 74,57 L 64,57 L 64,60 Z" />
+        <path d="M 60.5,52.5 C 62.5,50.8 65.5,50.5 69,50.5 C 72.5,50.5 75.5,52.5 77.5,52.5" fill="none" stroke="var(--bg-light)" stroke-width="0.6" />
+        <path d="M 66.5,50 L 71.5,50 L 70.5,47 L 67.5,47 Z" />
+        <ellipse cx="69" cy="44.5" rx="2.8" ry="3" />
+        <path d="M 66,43.5 C 66.5,40.5 71,40.5 72,42.5 C 73,43 74,43.5 74.5,43.8 L 72,44.8 C 70,44.8 67,44.5 66,43.5 Z" />
+      </g>
+    </svg>
+
+    <div class="contact-container">
+      <div class="contact-box">
+        <h2>Kontakt</h2>
+        <p>fragen? einfach nur hallo?</p>
+        <div class="email">
+          hello (at) dorfbub.com
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-left">
+      dorfbub.com &copy; 
+      <span id="year"></span>
+    </div>
+    <button class="ds-btn" 
+      onclick="toggleModal(true)">
+      Datenschutz
+    </button>
+  </footer>
+
+  <div id="dsModal" class="modal">
+    <div class="modal-content">
+      <h3>Datenschutz</h3>
+      <p><strong>1. Allgemeines</strong><br>
+      Dies ist eine rein private Webseite. Es werden keinerlei personenbezogene Daten erhoben, getrackt oder analysiert.</p>
+      
+      <p><strong>2. Datenerfassung durch den Hoster (GitHub Pages)</strong><br>
+      Diese Website wird extern gehostet über den Dienst „GitHub Pages“ des Anbieters GitHub Inc. (88 Colin P Kelly Jr St, San Francisco, CA 94107, USA). Die Server von GitHub befinden sich in den USA. Deshalb werden Zugriffsdaten, die beim Aufruf der Webseite zwingend benötigt werden, in die USA übermittelt.</p>
+      
+      <p>Der Hoster erhebt und speichert automatisch Informationen in sogenannten Server-Log-Dateien, die Ihr Browser automatisch an GitHub übermittelt. Dies sind:</p>
+      <ul>
+        <li>Browsertyp und Browserversion</li>
+        <li>Verwendetes Betriebssystem</li>
+        <li>Referrer URL (die zuvor besuchte Seite)</li>
+        <li>Hostname des zugreifenden Rechners / IP-Adresse</li>
+        <li>Uhrzeit und Datum der Serveranfrage</li>
+        <li>Übertragene Datenmenge</li>
+      </ul>
+      
+      <button class="close-btn" 
+        onclick="toggleModal(false)">
+        Schließen
+      </button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('year')
+      .textContent = 
+      new Date().getFullYear();
+
+    function toggleModal(show) {
+      document.getElementById('dsModal')
+        .style.display = 
+        show ? 'flex' : 'none';
+    }
+  </script>
+
+</body>
+</html>
